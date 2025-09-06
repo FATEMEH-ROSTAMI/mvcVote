@@ -12,10 +12,11 @@ class User {
     // ثبت‌نام کاربر جدید
     public function register($name, $email, $password) {
         // هش کردن رمز عبور برای امنیت
-        $password_hash = password_hash($password, PASSWORD_BCRYPT);
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
         // آماده کردن کوئری برای ثبت کاربر
-        $stmt = $this->pdo->prepare("INSERT INTO users (name, email, password_hash, role, created_at) VALUES (?, ?, ?, 'user', NOW())");
+        $stmt = $this->pdo->prepare("INSERT INTO users (name, email, password_hash, role, created_at) 
+        VALUES (?, ?, ?, 'user', NOW())");
         try {
             $stmt->execute([$name, $email, $password_hash]);
             return true; // ثبت‌نام موفق
