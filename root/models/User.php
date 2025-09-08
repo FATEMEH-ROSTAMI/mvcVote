@@ -39,14 +39,7 @@ class User {
         return false; // ورود ناموفق
     }
 
-    // چک کردن نقش کاربر (مثل admin یا user)
-    public function isAdmin($user_id) {
-        $stmt = $this->pdo->prepare("SELECT role FROM users WHERE id = ?");
-        $stmt->execute([$user_id]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $user && $user['role'] === 'admin';
-    }
-
+   
     // گرفتن اطلاعات کاربر بر اساس ID
     public function getUserById($user_id) {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE id = ?");
