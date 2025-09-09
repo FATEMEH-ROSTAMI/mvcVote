@@ -1,0 +1,112 @@
+body {
+    font-family: 'Vazirmatn', Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e9fd 100%);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    direction: rtl;
+}
+
+.auth-container {
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 420px;
+    transition: transform 0.3s ease;
+}
+
+.auth-container:hover {
+    transform: translateY(-5px);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-form h2 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 1.8rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.6rem;
+    color: #2c3e50;
+    font-size: 0.95rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.9rem;
+    border: 1px solid #d9e2ec;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #f9fbfd;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    border-color: #4A90E2;
+    outline: none;
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+}
+
+.btn {
+    background: linear-gradient(90deg, #4A90E2 0%, #5fa8ff 100%);
+    color: #ffffff;
+    padding: 0.9rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn:hover {
+    background: linear-gradient(90deg, #3b79c9 0%, #4f94e0 100%);
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.error {
+    color: #e74c3c;
+    text-align: center;
+    margin-bottom: 1.2rem;
+    font-size: 0.9rem;
+    background-color: #ffe6e6;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+.link {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #2c3e50;
+}
+
+.link a {
+    color: #4A90E2;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.link a:hover {
+    text-decoration: underline;
+}

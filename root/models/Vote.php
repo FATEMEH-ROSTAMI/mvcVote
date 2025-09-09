@@ -46,9 +46,6 @@ class Vote
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
         
     }
-<<<<<<< HEAD
-   
-=======
 
     public function hasVoted($poll_id,$user_id)
     {
@@ -60,5 +57,4 @@ class Vote
     }
       
     
->>>>>>> aaf5437162a7e437e58226f9b050e892d46f2612
 }

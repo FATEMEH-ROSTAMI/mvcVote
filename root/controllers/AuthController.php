@@ -127,14 +127,15 @@ class AuthController
             $redirect='user/dashboard.php';///takmil shavad
         }
 
-        return [
-            'success'=>true,
-            'user_id'=>$user['id'],
-            'role'=>$user['role'],
-            'redirect'=>$redirect,
-            'message'=>'login was successful'
+        // return [
+        //     'success'=>true,
+        //     'user_id'=>$user['id'],
+        //     'role'=>$user['role'],
+        //     'redirect'=>$redirect,
+        //     'message'=>'login was successful'
 
-        ];
+        // ];
+        header("location:$redirect");
     }
 
     public function logout()
