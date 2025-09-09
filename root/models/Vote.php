@@ -13,12 +13,12 @@ class Vote
     }
 
     //new vote
-    public function create($user_id,$poll_id,$option_id)
+    public function create($poll_id, $option_id, $user_id)
     {
-        $stmt=$this->pdo->prepare("INSERT INTO votes (user_id,poll_id,option_id,voted_at)
+        $stmt=$this->pdo->prepare("INSERT INTO votes (poll_id, option_id, user_id, voted_at)
          VALUES (?,?,?,now())");
         try{
-            $stmt->execute([$user_id,$poll_id,$option_id]);
+            $stmt->execute([$poll_id, $option_id, $user_id]);
             return true;
         } 
         catch(PDOException $e)
@@ -46,7 +46,19 @@ class Vote
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
         
     }
-    public function hasVoted($poll_id,$user_id){
+<<<<<<< HEAD
+   
+=======
+
+    public function hasVoted($poll_id,$user_id)
+    {
+        $stmt=$this->pdo->prepare("SELECT COUNT(*) as count FROM votes WHERE poll_id=? AND user_id=? " );
+        $stmt->execute([$poll_id,$user_id]);
+        $result=$stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['count']>0;
         
     }
+      
+    
+>>>>>>> aaf5437162a7e437e58226f9b050e892d46f2612
 }
