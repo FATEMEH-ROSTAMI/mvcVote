@@ -46,4 +46,7 @@ class Vote
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
         
     }
+    public function hasVoted($poll_id,$user_id){
+        
+    }
 }

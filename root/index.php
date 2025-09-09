@@ -1,6 +1,4 @@
 <?php 
 
 require_once 'config/database.php';
-
-echo "salam";
-echo "salam aleykom";
+header("Location: views/polls/dashboard.php");
