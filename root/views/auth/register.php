@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ثبت‌نام</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="auth-container">
-        <form class="auth-form" action="process_register.php" method="POST">
+        <form class="auth-form" action="processregister.php" method="POST">
             <h2>ثبت‌نام</h2>
             <?php
-            require_once __DIR__ . '/../controllers/AuthController.php';
+            require_once __DIR__ . '/../../controllers/AuthController.php';
             $auth = new AuthController();
             $registerData = $auth->showRegister();
             ?>
-            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($registerData['csrf_token']); ?>">
+            <input type="hidden" name="csrf_token" value="<?php echo ($registerData['csrf_token']); ?>">
             
             <?php if (isset($_GET['error'])): ?>
                 <p class="error"><?php echo htmlspecialchars($_GET['error']); ?></p>

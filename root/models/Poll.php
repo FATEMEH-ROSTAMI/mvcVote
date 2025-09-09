@@ -32,7 +32,7 @@ class Poll
         $stmt->execute();
         return $stmt->fetchALL(PDO::FETCH_ASSOC);
     }
-
+   
     public function getById($poll_id)
     {
         $stmt=$this->pdo->prepare(" SELECT * FROM polls WHERE id=? ");

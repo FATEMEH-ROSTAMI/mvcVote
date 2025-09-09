@@ -1,21 +1,21 @@
 <?php
+session_start();
 require_once __DIR__ . '/../../controllers/AuthController.php';
 
 $auth = new AuthController();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
-    $csrf_token = $_POST['csrf_token'] ?? '';
 
-    $result = $auth->login($email, $password, $csrf_token);
+$email      = $_POST['email'] ?? '';
+$password   = $_POST['password'] ?? '';
+$csrf_token = $_POST['csrf_token'] ?? '';
 
+$result = $auth->login($email, $password, $csrf_token);
+
+
+if (is_array($result)) {
     if ($result['success']) {
-        header('Location: ' . $result['redirect']);
-        exit;
+        echo "✅ ورود موفق: خوش آمدی " . htmlspecialchars($_SESSION['user_name']);
     } else {
-        header('Location: login.php?error=' . urlencode($result['message']));
-        exit;
+        echo "❌ خطا: " . $result['message'];
     }
 }
-?>

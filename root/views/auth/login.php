@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -9,14 +10,14 @@
 </head>
 <body>
     <div class="auth-container">
-        <form class="auth-form" action="process_login.php" method="POST">
+        <form class="auth-form" action="processlogin.php" method="POST">
             <h2>ورود به سیستم</h2>
             <?php
             require_once __DIR__ . '/../../controllers/AuthController.php';
             $auth = new AuthController();
             $loginData = $auth->showLogin();
             ?>
-            <input type="hidden" name="csrf_token" value="<?php echo($loginData['csrf_token']); ?>">
+            <input type="text" name="csrf_token" value="<?php echo($loginData['csrf_token']); ?>">
             
             <?php if (isset($_GET['error'])): ?>
                 <p class="error"><?php echo($_GET['error']); ?></p>

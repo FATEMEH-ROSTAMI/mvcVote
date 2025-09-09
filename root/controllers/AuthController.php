@@ -3,6 +3,7 @@
 require_once __DIR__ . "/../models/User.php";
 require_once __DIR__ . "/../config/database.php";
 
+
 class AuthController
 {
     private $pdo;
@@ -16,30 +17,35 @@ class AuthController
     }
         
     private function generateCSRFToken()
-    {
-        if(session_status()==PHP_SESSION_NONE)
-        {
-            session_start();
-        }
-        $token=bin2hex(random_bytes(32));
-        $_SESSION['csrf_token']=$token;
-        return $token;
-    } 
-
-    private function verifyCSRFToken($token)
-    {
-        if(session_status() == PHP_SESSION_NONE)
-        {
-            session_start();
-        }
-        if(!isset($_SESSION['csrf_token']) || $token !== $_SESSION['csrf_token'] )
-        {
-            return false;
-        }
-        unset($_SESSION['csrf_token']);
-        return true;
+{
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
     }
 
+    // همیشه یه توکن جدید بساز
+    $token = bin2hex(random_bytes(32));
+    $_SESSION['csrf_token'] = $token;
+
+    return $token;
+}
+
+private function verifyCSRFToken($token)
+{
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    if (!isset($_SESSION['csrf_token'])) {
+        return false;
+    }
+
+    $isValid = hash_equals($_SESSION['csrf_token'], $token);
+
+    // مصرف شدن توکن بعد از چک
+    unset($_SESSION['csrf_token']);
+
+    return $isValid;
+}
     public function showRegister()
     {
         $csrf_token=$this->generateCSRFToken();
@@ -80,7 +86,7 @@ class AuthController
         return ['success' => false, 'message' => 'error in user registration'];
         }
         
-        session_start();
+        
         $_SESSION['user_id']   = $result;
         $_SESSION['user_name'] = $name;
         $_SESSION['user_role'] = 'user';
@@ -113,7 +119,7 @@ class AuthController
             return ['success' => false , 'message'=> 'email or password is incorrect']; 
         }
 
-        session_start();
+        
         $_SESSION['user_id']=$user['id'];
         $_SESSION['user_name']=$user['name'];
         $_SESSION['user_role']=$user['role'];
@@ -140,21 +146,19 @@ class AuthController
 
     public function logout()
     {
-        session_start();
-        session_unset();
         session_destroy();
         return ['success'=>true,'redirect'=>'login.php','message'=>'you have exited'];
     }
 
     public function isLoggedIn()
     {
-        session_start();
+        
        return isset($_SESSION['user_id']);
     }
 
     public function isAdmin()
     {
-        session_start();
+        
         return isset($_SESSION['user_role'])  && $_SESSION['user_role']=='admin';
     }
 }
