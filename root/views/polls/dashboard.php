@@ -1,16 +1,20 @@
 <?php
 require_once __DIR__ . "/../../controllers/PollController.php";
 $pollController = new PollController();
-$polls = $pollController->index(); 
+$polls = $pollController->index();
 ?>
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <title>پنل مدیریت نظرسنجی</title>
-    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="../../public/dashboard.css">
 </head>
+
 <body>
+    <button><a href="http://localhost/voting%20system/mvcVote/root/logout">خروج</a></button>
+
     <h1>پنل مدیریت نظرسنجی‌ها</h1>
 
     <!-- فرم ساخت نظرسنجی جدید -->
@@ -36,14 +40,14 @@ $polls = $pollController->index();
 
     <!-- لیست نظرسنجی‌ها -->
     <div class="dashboard">
-        <?php foreach($polls as $poll): ?>
+        <?php foreach ($polls as $poll): ?>
             <div class="card">
                 <h3><?= htmlspecialchars($poll['title']); ?></h3>
                 <?php
-                    $totalVotes = array_sum(array_column($poll['options'], 'votes'));
-                    if ($totalVotes == 0) $totalVotes = 1;
+                $totalVotes = array_sum(array_column($poll['options'], 'votes'));
+                if ($totalVotes == 0) $totalVotes = 1;
                 ?>
-                <?php foreach($poll['options'] as $option): 
+                <?php foreach ($poll['options'] as $option):
                     $percent = ($option['votes'] > 0) ? round(($option['votes'] / $totalVotes) * 100) : 0;
                 ?>
                     <div class="option">
@@ -71,4 +75,5 @@ $polls = $pollController->index();
         }
     </script>
 </body>
+
 </html>

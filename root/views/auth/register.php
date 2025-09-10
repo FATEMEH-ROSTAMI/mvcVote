@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ثبت‌نام</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../../public/registerstyle.css">
 </head>
 <body>
     <div class="auth-container">
-        <form class="auth-form" action="processregister.php" method="POST">
+        <form class="auth-form" action="register" method="POST">
             <h2>ثبت‌نام</h2>
             <?php
             require_once __DIR__ . '/../../controllers/AuthController.php';

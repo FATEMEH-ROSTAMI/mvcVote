@@ -1,22 +1,19 @@
 <?php
 class Route {
     public function __construct() {
-        // گرفتن مسیر از URL
         $url = isset($_GET['path']) ? trim($_GET['path'], '/') : '';
         if (empty($url)) {
-            $url = 'home'; // مسیر پیش‌فرض
+            $url = 'login';
         }
 
-        // تعریف مسیرها
         $urls_array = [
-            // مسیرهای عمومی
             [
                 'url' => '/^home$/',
                 'controller' => 'PollController',
                 'action' => 'index',
                 'type' => 'GET'
             ],
-            // مسیرهای احراز هویت
+
             [
                 'url' => '/^login$/',
                 'controller' => 'AuthController',
@@ -45,20 +42,14 @@ class Route {
                 'url' => '/^logout$/',
                 'controller' => 'AuthController',
                 'action' => 'logout',
-                'type' => 'POST'
+                'type' => 'GET'
             ],
-            // مسیرهای نظرسنجی
+
             [
-                'url' => '/^poll$/',
+                'url' => '/^polls$/',
                 'controller' => 'PollController',
                 'action' => 'index',
                 'type' => 'GET'
-            ],
-            [
-                'url' => '/^poll\/create$/',
-                'controller' => 'PollController',
-                'action' => 'create',
-                'type' => 'POST'
             ],
             [
                 'url' => '/^poll\/(\d+)$/',
@@ -72,9 +63,9 @@ class Route {
                 'action' => 'vote',
                 'type' => 'POST'
             ],
-            // مسیرهای ادمین
+
             [
-                'url' => '/^admin\/dashboard$/',
+                'url' => '/^dashboard$/',
                 'controller' => 'AdminController',
                 'action' => 'dashboard',
                 'type' => 'GET'
@@ -96,18 +87,6 @@ class Route {
                 'controller' => 'AdminController',
                 'action' => 'createPoll',
                 'type' => 'POST'
-            ],
-            [
-                'url' => '/^admin\/delete-poll\/(\d+)$/',
-                'controller' => 'AdminController',
-                'action' => 'deletePoll',
-                'type' => 'POST'
-            ],
-            [
-                'url' => '/^admin\/poll-results\/(\d+)$/',
-                'controller' => 'AdminController',
-                'action' => 'viewPollResults',
-                'type' => 'GET'
             ]
         ];
 
@@ -119,20 +98,13 @@ class Route {
                 $url_arr['type'] == $_SERVER['REQUEST_METHOD']
             ) {
                 $route_fail = false;
-
-                // حذف اولین مقدار matches (چون کل مسیر رو شامل می‌شه)
                 unset($matches[0]);
 
-                // وارد کردن فایل کنترلر
-                include __DIR__ . '/controllers/' . $url_arr['controller'] . '.php';
-
-                // ساخت شیء کنترلر
+                include 'controllers/' . $url_arr['controller'] . '.php';
                 $controller = new $url_arr['controller'];
 
-                // فراخوانی اکشن با پارامترها
                 $result = call_user_func_array([$controller, $url_arr['action']], array_values($matches));
 
-                // مدیریت خروجی کنترلر
                 if (is_array($result)) {
                     if (isset($result['redirect'])) {
                         header('Location: ' . $result['redirect']);
@@ -141,7 +113,7 @@ class Route {
                     if (isset($result['view'])) {
                         $view_file = __DIR__ . '/views/' . $result['view'];
                         if (file_exists($view_file)) {
-                            extract($result); // استخراج داده‌ها (مثل users, polls, csrf_token)
+                            extract($result);
                             include $view_file;
                         } else {
                             echo "خطا: فایل ویو {$result['view']} پیدا نشد";
@@ -150,17 +122,13 @@ class Route {
                         echo $result['message'];
                     }
                 }
-
-                break; // خروج از حلقه بعد از پیدا کردن مسیر
+                break;
             }
         }
 
         if ($route_fail) {
+            http_response_code(404);
             echo "(404) صفحه پیدا نشد";
         }
     }
 }
-
-// شروع روتر
-new Route();
-?>

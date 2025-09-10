@@ -1,7 +1,11 @@
 <?php 
-session_start();
-include "root/models/Poll.php";
-include_once "root/models/User.php";
-require_once 'config/database.php';
-header("Location: views/auth/login.php");
 
+require_once  'helpers/router.php';
+include "models/Poll.php";
+include_once "models/User.php";
+require_once  'config/database.php';
+
+
+session_start();
+
+new Route();

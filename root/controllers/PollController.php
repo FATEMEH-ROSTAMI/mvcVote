@@ -3,8 +3,9 @@
 require_once __DIR__ . "/../models/Poll.php";
 require_once __DIR__ . "/../models/vote.php";
 require_once __DIR__ . "/../models/option.php";
+require_once __DIR__ . "/../config/controller.php";
 
-class PollController
+class PollController extends controller
 {
     private $pollModel;
     private $voteModel;
@@ -68,19 +69,28 @@ class PollController
 
 
 
-    public function vote($poll_id, $option_id, $user_id)
-    {
-      if($this->voteModel->hasVoted($poll_id,$user_id))
-      return ['success'=> false , 'message'=> "you voted befor!"];
-           
-      $vote=$this->voteModel->create($poll_id, $option_id, $user_id);
-      if(!$vote)
-      {
-        return   ['success'=> false , 'message'=> "error in vote!"];
-      }
-      return ['success'=> true , 'message'=> "your vote saved!"];
+    public function vote()
+{
+    $poll_id   = $_POST['poll_id']   ?? null;
+    $option_id = $_POST['option_id'] ?? null;
+    $user_id   = $_POST['user_id']   ?? null; // بعداً از سشن بگیر
+    
+    if (!$poll_id || !$option_id || !$user_id) {
+        return ['success' => false, 'message' => 'اطلاعات ناقص ارسال شده است'];
     }
 
+    if ($this->voteModel->hasVoted($poll_id, $user_id)) {
+        return ['success'=> false , 'message'=> "شما قبلاً رای داده‌اید!"];
+        
+    }
+
+    $vote = $this->voteModel->create($poll_id, $option_id, $user_id);
+    if(!$vote) {
+        return ['success'=> false , 'message'=> "خطا در ثبت رای!"];
+    }
+    $this->view('userPoll');
+    return true;
+}
 
     public function result($poll_id,$option_id,)
     {
